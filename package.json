@@ -1,0 +1,19 @@
+{
+  "name": "scale-func",
+  "version": "1.0.0",
+  "description": "Javascript translation functions for scaling values",
+  "main": "scale-func.js",
+  "scripts": {
+    "test": "mocha test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ffomezolam/scale-func.git"
+  },
+  "author": "Andrew Malozemoff",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ffomezolam/scale-func/issues"
+  },
+  "homepage": "https://github.com/ffomezolam/scale-func#readme"
+}
