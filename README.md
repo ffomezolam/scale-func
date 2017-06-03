@@ -1,3 +1,3 @@
 # Scale-Func
 
-Javascript functions for adjusting functions
+Javascript functions for scaling values with transformations

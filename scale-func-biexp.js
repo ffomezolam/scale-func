@@ -1,50 +1,44 @@
 /**
+ * Exports a function to scale values and transform them based on a bipolar
+ * exponentiation function (e.g. exponent of a negative number will always be
+ * negative opposite of result on that same positive number).
+ *
  * @module ScaleFuncBiExp
  */
 (function(name, root, factory) {
     if(typeof define === 'function' && define.amd) {
         define(['scaley'], factory);
     } else if(typeof exports === 'object') {
-        module.exports = factory();
+        module.exports = factory(require('scaley'));
     } else {
-        root[name] = factory();
+        root[name] = factory(scaley);
     }
-}('ScaleFuncBiExp', this, function() {
+}('ScaleFuncBiExp', this, function(scale) {
     /**
      * Calculate bipolar exponent scaled to bounds
      */
-    function BiExp(input, exp, scale) {
+    function biExp(input, exp, inmin, inmax, outmin, outmax) {
         var ins = {
-            min: 0,
-            max: 1
+            min: (typeof inmin == "number") ? inmin : 0,
+            max: (typeof inmax == "number") ? inmax : 1
         };
         var outs = {
-            min: 0,
-            max: 1
+            min: (typeof outmin == "number") ? outmin : 0,
+            max: (typeof outmax == "number") ? outmax : 1
         };
 
-        if(typeof exp == "undefined" || typeof exp != "number") exp = 2;
-
-        if(typeof scale == "object") {
-            if("minin" in scale && typeof scale.minin == "number") ins.min = scale.minin;
-            if("minout" in scale && typeof scale.minout == "number") outs.min = scale.minout;
-            if("maxin" in scale && typeof scale.maxin == "number") ins.max = scale.maxin;
-            if("maxout" in scale && typeof scale.maxout == "number") outs.max = scale.maxout;
-        }
+        if(typeof exp != "number") exp = 2;
 
         if(input > ins.max || input < ins.min) throw "Input " + input + " outside bounds";
 
         // convert input to -1, 1 range
-        var avg = ins.min + ins.max / 2;
-        var div = ins.min - avg;
-        input -= avg;
-        input /= div;
+        input = scale(input, ins.min, ins.max, -1, 1);
 
         var output;
 
         // translate
         if(input > 0) {
-            output = pow(input, exp);
+            output = Math.pow(input, exp);
         } else if (input < 0) {
             output = -Math.pow(Math.abs(input), exp);
         } else {
@@ -52,10 +46,10 @@
         }
 
         // convert to output range
-        var avg = outs.min + outs.max / 2;
-        var div = outs.min - avg;
+        output = scale(output, -1, 1, outs.min, outs.max);
 
+        return output;
     }
 
-    return BiExp;
+    return biExp;
 }));

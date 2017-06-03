@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/ffomezolam/scale-func/issues"
   },
-  "homepage": "https://github.com/ffomezolam/scale-func#readme"
+  "homepage": "https://github.com/ffomezolam/scale-func#readme",
+  "devDependencies": {
+    "should": "^11.2.1"
+  },
+  "dependencies": {
+    "scaley": "git+https://github.com/ffomezolam/scaley.git"
+  }
 }
