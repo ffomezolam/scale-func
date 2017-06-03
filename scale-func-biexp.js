@@ -3,6 +3,10 @@
  * exponentiation function (e.g. exponent of a negative number will always be
  * negative opposite of result on that same positive number).
  *
+ * All inputs are initially scaled based on the input range to be between -1
+ * and 1, and the exponent is performed on the absolute scaled value, then
+ * rescaled to the output range
+ *
  * @module ScaleFuncBiExp
  */
 (function(name, root, factory) {
